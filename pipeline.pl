@@ -22,14 +22,14 @@ $min_call_rate = 0.9;
 #Set the weeks of data to be considered for analysis
 $startweek = 0;
 $endweek = 1000;
-
+$maxmarkers = 24;
 
 
 
 `./pre-process_covid_sequences.pl $file $min_maf $abs_min $min_call_rate $meta $startweek $endweek`;
 `./process_covid_sequences.pl $file`;
 `./convert_base_space_to_genotypes.pl $file`;
-`./select_minimal_markers_v2.pl $file`;
+`./select_minimal_markers_v2.pl $file $maxmarkers`;
 `./check_output.pl $file $meta $startweek $endweek`;
 `./dereplicate_minimal_marker_lineages.pl $file`;
 `./prepare_primer_submission.pl $file`;
