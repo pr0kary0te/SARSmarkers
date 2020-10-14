@@ -18,6 +18,9 @@ In our analysis of the 2020-09-03 COG release, we found that 24 markers was siff
 
 6) Experimental option: use ./wget_pipeline.pl : this should download the latest COG data via WGET (if that's on your system) and run the pipeline on these automatically. THis was tested with the 2020-09-03 dataset and worked fine, but future changes to the COG website could break this so use with caution.
 
+Additional analysis
+The script qc_genotype_data.pl was used to group samples into groups of identical genotypes after analyisis with PACE markers for publication.  This used the data in the file genotyping_calls_PHE.tdt.  Just run ./qc_genotype_data.pl 
+
 
 
 
