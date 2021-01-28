@@ -57,7 +57,9 @@ while(<IN>)
   {
   chomp;
   if(/>(.*)/){$id = $1; $name = $id; $id =~ s/[^0-9A-Z-a-z]/_/g; $week = $name2week{$name}; 
-if ($week > $startweek && $week < $endweek){push @ids, $id;}}
+  
+#Changed comparison operators to >= and <= (were < and > in error)
+if ($week >= $startweek && $week <= $endweek){push @ids, $id;}}
 
   else
     {
