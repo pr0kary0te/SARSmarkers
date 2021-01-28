@@ -15,12 +15,14 @@ $endweek = $ARGV[6];
 
 
 open(META, $meta);
-#sequence_name,country,adm1,sample_date,epi_week,lineage,lineage_support
-
+#Was originally: sequence_name,country,adm1,sample_date,epi_week,lineage,lineage_support
+#Jan 2021 COG now use: sequence_name,country,adm1,TrueFalse,sample_date,epi_week,lineage,lineage_support
 $head = <META>;
 while(<META>)
 {
-($name,$country,$adm,$date,$week,@other) = split(/\,/, $_);
+#Jan 2021 - changed REGEX as COG have introduced a new column in the metadata!
+#($name,$country,$adm,$date,$week,@other) = split(/\,/, $_);
+($name,$country,$adm,$truefalse,$date,$week,@other) = split(/\,/, $_);
 $name2week{$name} = $week;
 $weeks{$week}++;
 }
