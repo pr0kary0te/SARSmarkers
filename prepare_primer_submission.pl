@@ -25,10 +25,13 @@ while(<IN>)
 {
 chomp;
 ($seq, $count) = split(/\t/, $_);
+#Jan 2021 - added this line to catch the ? character which didn't previously appear in the COG alignments
+$seq =~ s/\?/N/g;
 ($first, $ambiguity, $last)  = split(/[\[\]]/, $seq);
 
-$i = 0; while($first =~ /([A-Z-])/g){$first_bases{$i}{$1}+=$count; $i++;}
-$i = 0; while($last =~ /([A-Z-])/g){$last_bases{$i}{$1}+=$count; $i++;}
+#Jan 2021 - edited these lines to catch the ? character which didn't previously appear in the COG alignments
+$i = 0; while($first =~ /([A-Z\-\?])/g){$first_bases{$i}{$1}+=$count; $i++;}
+$i = 0; while($last  =~ /([A-Z\-\?])/g){$last_bases{$i}{$1}+=$count; $i++;}
 
 }
 
@@ -38,7 +41,7 @@ $newfirstseq ="";
 foreach $i(sort {$a<=>$b} keys %first_bases){$n = 0; $top = 0; $next = 0; $ref = $first_bases{$i}; %hash = %$ref; 
 foreach $base(keys %hash){$n = $hash{$base}; 
 if($n >$top){$top = $n; $topbase = $base;} elsif ($n >$next){$next = $n; $nextbase = $base;}}
-if($nextbase !~ /[N\-]/ && $top >0 && $next > 0 && $next/$top > $min_maf)
+if($nextbase !~ /[N\-\?]/ && $top >0 && $next > 0 && $next/$top > $min_maf)
 { $pair = "$topbase$nextbase"; $base = ambiguity($pair); } 
 else{$base = $topbase;}
 $newfirstseq.=$base;
