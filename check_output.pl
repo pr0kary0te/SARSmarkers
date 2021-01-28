@@ -26,8 +26,10 @@ chomp;
 #Header columns are:
 #sequence_name,country,adm1,sample_date,epi_week,lineage,lineage_support
 #e.g. England/BRIS-121A64/2020,UK,UK-ENG,2020-03-13,11,B,90.0
+#COG changed the file format - Jan 2021 - updated this REGEX
+#($seq_name, $country,$adm1,$sample_date,$epi_week,$lineage,$lineage_support) = split(/\,/, $line);
+($seq_name, $country,$adm1,$TrueFalse,$sample_date,$epi_week,$lineage,$lineage_support) = split(/\,/, $line);
 
-($seq_name, $country,$adm1,$sample_date,$epi_week,$lineage,$lineage_support) = split(/\,/, $line);
 if($seq_name =~ /[^\/]+\/([^\/]+)\-[^\/]+.*/){$city = $1;}
  
   elsif ($seq_name =~ /[^\/]+\/([^\/]+)[^\/]+.*/){$city = $1;} 
