@@ -3,8 +3,7 @@
 
 
 $markers = $ARGV[0];
-$markers =~ s/\.fasta/_minimal_markers-mincallrate-0.5-minmaf-0.001.txt/;
-$markers =~ s/\.fa/_minimal_markers-mincallrate-0.5-minmaf-0.001.txt/;
+$markers =~ s/\.fasta/_minimal_markers.txt/;
 $markers = "annotated_$markers";
 
 chomp $markers;
