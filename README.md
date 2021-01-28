@@ -1,5 +1,8 @@
 # SARSmarkers
 
+#UPDATE Jan 2021: COG have added an additional column to the metadata file, which required an update to the matching REGEX in several of the pipeline scripts.
+Be sure to download the latest version if using data downloaded from 2021 onwards
+
 This is a pipeline written in PERL to produce a minimal set of SNP markers capable of discriminating circulating lineages of SARS-CoV-2. It could equally be applied to a sequence alignent of any other organism but has only been tested with ~40,000 accessions of SARS-CoV-2 (~30 kilobases) and may not scale well to larger datasets.
 
 To run:
