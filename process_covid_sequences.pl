@@ -15,6 +15,7 @@ print LOG "$date\nRunning process_covid_sequences.pl ${file}_covid_variants.tdt\
 open(IN, "${file}_covid_variants.tdt");
 open(OUT, ">${file}_covid_variants_duplicates_removed.tdt");
 $head = <IN>;
+chomp $head;
 ($id, @vars) = split(/\t/, $head);
 
 #Read the header from the input file and set up an index for header names to position
@@ -27,6 +28,7 @@ while(<IN>)
 {
 $i++;
 chomp;
+
 ($id, $bases) = split(/\t/, $_);
 @bases = split(//, $bases);
 $len = @bases;
