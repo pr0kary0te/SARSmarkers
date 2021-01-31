@@ -20,10 +20,12 @@ $abs_min = 4;
 $min_call_rate = 0.9;
 
 #Set the weeks of data to be considered for analysis
-$startweek = 0;
+$startweek = 53;
 $endweek = 1000;
 $maxmarkers = 24;
 
+
+if(-e "priority_variants_pos.txt"){`./create_virtual_strain_from_variants.pl`;}
 
 
 `./pre-process_covid_sequences.pl $file $min_maf $abs_min $min_call_rate $meta $startweek $endweek`;

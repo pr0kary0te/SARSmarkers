@@ -1,6 +1,33 @@
 #!/usr/bin/perl
 
 
+#Check to see if there are any variants which must be included in the analysis
+if(-e "priority_variants_pos.txt")
+{
+open(VARS, "priority_variants_pos.txt");
+$head = <VARS>;
+chomp $head;
+@head = split(/\t/, $head);
+
+while(<VARS>)
+{
+#Variant Gene    subs    weight
+#B.1.1.7 nsp2    C913T   0
+chomp;
+($variant, $gene, $call, $weight) = split(/\t/, $_);
+if($call =~ /\D(\d+)(\D)/)
+   {
+   $snp = "$2"; $pos = $1; if($variant =~/\D/ && $pos =~ /\d/ && $snp =~ /[A-Z]/ && $weight >0){$priority{$pos}++; print "$pos is a priority position in $variant ($call)\n";}
+   }
+$variants{$variant}++;
+}
+foreach $variant(sort keys %variants){push @priority_vars, $variant;}
+%variants = ();
+}
+
+
+
+
 
 
 #This is currently set to more than the number of markers in the input file (~ 35000) but if it is set lower then markers are prioritised.
@@ -48,6 +75,7 @@ while(<IN>)
 {
 chomp;
 ($id, @data) = split(/\t/, $_); 
+
 %alleles = ();
 foreach $cell(@data)
   {
@@ -64,6 +92,8 @@ if($hlen != $thislen){print "$id has length of $thislen which doesn't match head
 
 $data = join("", @data);
 $pattern2id{$data} = $id;
+
+
 }
 
 
@@ -102,6 +132,10 @@ foreach $pattern1(sort keys %pattern2id)
    $first++;
    $score = 0;
    $id = $pattern2id{$pattern1};
+   if($id =~ /Base_(\d+)_/){$pos = $1;}
+   
+   #add a weighting of $l to any scores at priority positions in VOCs
+   if($priority{$pos} >0 && $used{$pos}<1){$score +=$l;}
    %testmatrix =();
    @pattern1 = split(//, $pattern1);
    #print "$id\t$pattern1\n";
@@ -135,7 +169,8 @@ foreach $pattern1(sort keys %pattern2id)
        $maf = $pattern2maf{$bestpattern}; $id = $pattern2id{$bestpattern}; 
       if($bestscore >0)
          {
-         print "$bestscore\t$id\t$maf\t$bestpattern\n"; 
+         print "$bestscore\t$id\t$maf\t$bestpattern\n";
+         if($id =~ /(\d+)/){$pos = $1; $used{$pos}++;} 
          $print = $bestpattern;
          @print = split(//, $print);
          $print = join("\t", @print);

@@ -5,6 +5,34 @@ $max_diff = 0;
 
 $file = $ARGV[0];
 
+
+
+if(-e "priority_variants_pos.txt")
+{
+open(VARS, "priority_variants_pos.txt");
+$head = <VARS>;
+chomp $head;
+@head = split(/\t/, $head);
+
+while(<VARS>)
+{
+#Variant Gene    subs    weight
+#B.1.1.7 nsp2    C913T   0
+chomp;
+($variant, $gene, $call, $weight) = split(/\t/, $_);
+$priority_variants{$variant}++;
+}
+}
+
+
+
+
+
+
+
+
+
+
 open(LOG, ">>$file.pipeline.log");
 $date = `date`; chomp $date;
 
@@ -28,7 +56,6 @@ while(<IN>)
 {
 $i++;
 chomp;
-
 ($id, $bases) = split(/\t/, $_);
 @bases = split(//, $bases);
 $len = @bases;
@@ -56,10 +83,12 @@ $j = $i+1;
  while($j < $len)
   {
   $seq2 = $array[$j]; $j++; @sequence2 = split(//, $seq2);
-  $m = 0;
-  $x = @sequence1; $diff = 0;
-  while($m < $x){if($sequence1[$m] ne $sequence2[$m] && $sequence1[$m] =~ /[CATG]/ && $sequence2[$m] =~ /[CATG]/){$diff++; last;}$m++;}
-  $var = $vars[$j]; if($diff <= $max_diff){delete $vars{$var};}
+  $m = -1;
+  $x = @sequence1; 
+  $diff = 0;
+  while($m < $x){$m++; if($sequence1[$m] ne $sequence2[$m] && $sequence1[$m] =~ /[CATGN]/ && $sequence2[$m] =~ /[CATGN]/){$diff++; last;}}
+  $var = $vars[$j]; 
+  if($diff <= $max_diff){print "\nIdentical\n$vars[$i]\t$seq\n$vars[$j]\t$seq2\n"; if($priority_variants{$var} <1){delete $vars{$var}; print "deleting $var\n";}}
   }
 $i++;
 }

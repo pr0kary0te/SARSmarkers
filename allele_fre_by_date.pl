@@ -24,15 +24,15 @@ if($seq =~ /\[([A-Z])\/([A-Z])\]/){$lookup{$base}{$1}++; $lookup{$base}{$2}++; p
 $meta = $ARGV[1];
 
 open(META, $meta);
-#Updated REGEX Jan 2021 as COG changed the metadate file format
-#sequence_name,country,adm1,Tre/False,sample_date,epi_week,lineage,lineage_support
+#sequence_name,country,adm1,sample_date,epi_week,lineage,lineage_support
 
 $head = <META>;
 while(<META>)
 {
+#COG changed the file format - Jan 2021 - updated this REGEX
 #($name,$country,$adm,$date,$week,@other) = split(/\,/, $_);
-#Updated REGEX Jan 2021 as COG changed the metadate file format
-($name,$country,$adm,$TreuFalse,$date,$week,@other) = split(/\,/, $_);
+($name,$country,$adm,$truefalse,$date,$week,@other) = split(/\,/, $_);
+
 $name2week{$name} = $week;
 }
 close META;

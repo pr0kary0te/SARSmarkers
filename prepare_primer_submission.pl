@@ -25,11 +25,9 @@ while(<IN>)
 {
 chomp;
 ($seq, $count) = split(/\t/, $_);
-#Jan 2021 - added this line to catch the ? character which didn't previously appear in the COG alignments
 $seq =~ s/\?/N/g;
 ($first, $ambiguity, $last)  = split(/[\[\]]/, $seq);
 
-#Jan 2021 - edited these lines to catch the ? character which didn't previously appear in the COG alignments
 $i = 0; while($first =~ /([A-Z\-\?])/g){$first_bases{$i}{$1}+=$count; $i++;}
 $i = 0; while($last  =~ /([A-Z\-\?])/g){$last_bases{$i}{$1}+=$count; $i++;}
 
