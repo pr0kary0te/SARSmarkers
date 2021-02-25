@@ -1,5 +1,7 @@
 # SARSmarkers
 
+#Update Feb 2021.  Uploaded files with details of the latest Variant of Concern markers in VOC-PACE-marker_panel.xlsx and New Variant Assay Designs_010221.xlsx plus a laboratory guide for how to run these markers in 96-plate format to detect VOCs: VoC_screening_with_RT-PACE_Methodv1-96_only.pdf
+
 #UPDATE Jan 2021: COG have added an additional column to the metadata file, which required an update to the matching REGEX in several of the pipeline scripts.
 Be sure to download the latest version if using data downloaded from 2021 onwards
 
