@@ -13,10 +13,13 @@ $seqs = `grep -c ">" $file`; chomp $lines;
 
 $usage = "Usage: ./random_sample_fasta.pl <filename> [number of sequences to get]\n";
 
+#Check the first and second lines of the file to be sure it looks like valid FASTA
 if($sample_size !~ /^\d+$/){die "\"$sample_size\" is not a valid sample size, please enter a number\n$usage";}
 if($sample_size >= $seqs){die "You asked for $sample_size random sequences but $file only seems to have $seqs\n$usage";}
-if($id !~ /^>/){die "$id doesn't look like a FASTA header, check the input file $file\n$usage";} 
-if($seq !~ /^[A-Z\-]+$/){die "$seq is not a valid FASTA sequence line, check input file $file\n$usage";}
+if($id !~ /^>/){die "$id doesn't look like a FASTA header, check the input file $file\n$usage";}
+
+#Added in \? as an acceptible character as this is being used by COG in their alignments now
+if($seq !~ /^[A-Z\-\?]+$/){die "$seq is not a valid FASTA sequence line, check input file $file\n$usage";}
 if($seqs <$min){die "There are only $seqs sequences in $file, so not really worth random sampling\n$usage";}
 
 $i = 0;
