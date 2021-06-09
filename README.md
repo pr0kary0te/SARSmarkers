@@ -8,7 +8,7 @@ Be sure to download the latest version if using data downloaded from 2021 onward
 Also added the ability to specifiy priority variants which must be included in the SNP panel or must not be used. These are specified in the file priority_variants.txt.  In the current example file, variants which must be included (some SNPs in the S gene) are flagged 1, those that must not are -1 (these were known non-fixed mutations) and those which could be included are marked as zero.  The script generates a pseudo-sequence for each variant in column 1 based on the wuhan reference (wuhan_hu-1.fa - included). If the priority_variants.txt file is present, this will be used, so delete the file if you don't want to use this feature.
 ######
 
-This is a pipeline written in PERL to produce a minimal set of SNP markers capable of discriminating circulating lineages of SARS-CoV-2. It could equally be applied to a sequence alignent of any other organism but has only been tested with ~40,000 accessions of SARS-CoV-2 (~30 kilobases) and may not scale well to larger datasets.
+This is a pipeline written in PERL to produce a minimal set of SNP markers capable of discriminating circulating lineages of SARS-CoV-2. It could equally be applied to a sequence alignent of any other organism but has only been tested with ~40,000 accessions of SARS-CoV-2 (~30 kilobases) and may not scale well to larger datasets. See https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0243185 for details of SARS genotyping by RT-PACE PCR
 
 To run:
 1) Download all of the PERL scripts in this repositary along with the example alignment and metadata files into a single directory.
